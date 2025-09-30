@@ -1,0 +1,147 @@
+---
+title: "Lab 2"
+author: "Robert Cervantes"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Tasks
+
+These are the tasks for lab 2
+
+
+## Task 1
+Obtain the working directory
+
+```{r}
+getwd()
+```
+
+## Task 2
+Read in csv data 
+
+```{r}
+csv <- read.csv("EPAGAS.csv")
+```
+
+Show the first 6 rows of data
+
+```{r}
+head(csv)
+```
+
+## Task 3
+Create a mpg vector from the MPG column of the CSV file
+```{r}
+mpg <- csv$MPG
+mpg
+```
+
+Standardize mpg and verify result
+```{r}
+z <- (csv$MPG - mean(csv$MPG)) / sd(csv$MPG)
+```
+
+```{r}
+mean(z)
+```
+
+```{r}
+var(z)
+```
+
+Find mpg values that are possible outliers 
+
+```{r}
+# possible outliers
+mpg[abs(z) >= 2 & abs(z) < 3]
+```
+
+values of mpg that defined as outliers.
+```{r}
+mpg[abs(z) > 3]
+```
+
+
+Creating dotplot of MPG
+
+```{r}
+## first loading package in 
+library(lattice)
+
+
+colors <- rep("black", length(z)) 
+colors[abs(z) >= 2 & abs(z) <= 3] <- "blue" # possible outliers
+colors[abs(z) > 3] <- "red" # outliers
+
+# construct dotplot
+dotplot(mpg,
+        col = colors,
+        xlab = "MPG")
+
+```
+
+## Task 4
+
+Make a boxplot of mpg variable
+
+```{r}
+boxplot(mpg,
+        col = "black",
+        notch = TRUE,
+        main = "BoxPlot of mpg Variable",
+        horizontal = TRUE
+        )
+```
+
+Using the Chebyshev’s theorem
+$$
+  1 - \frac{1}{k^2}
+$$
+
+Where $k$ is the standard deviation of the mean and $k > 1$.
+
+Predicting proportion within 2 STDev of the mean of the data set.
+
+$$
+  1 - \frac{1}{k^2} = 1 - \frac{1}{2^2} = 1 - \frac{1}{4} = \frac{3}{4} \approx 0.75
+$$
+
+
+So using the exact proportion with the MPG data 96% fall within 2 STDev. :
+```{r}
+length(mpg[abs(z) < 2]) / length(mpg)
+```
+
+
+The Chebyshev’s theorem does agree with the data because the theorom states that prorption of the data must be at least 75% and the I got 96%.
+
+
+Using Empirical rule which is also known as the 68-95-99.7 Rule. We know that for normal distribution about 95% of data should fall within 2 STDev of the mean.
+
+
+In the MPG data the the exact proportion was 96% which is very close to 95% so by the Empirical rule the data corresponds very well!
+
+
+The Empirical rule is valid in this case because the data is "Normal" as shown by the close match between the predicted 95% and the actual 96% proportions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
