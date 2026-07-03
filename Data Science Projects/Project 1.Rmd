@@ -1,0 +1,39 @@
+---
+title: "Project 1"
+author: "Robert Cervantes"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: spacelab
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Package and check ntickets is there
+
+```{r}
+library(MATH4753F25robert)
+ls("package:MATH4753F25robert")
+```
+
+
+## ntickets
+
+```{r}
+MATH4753F25robert::ntickets
+```
+
+
+
+## Running Function
+
+```{r}
+MATH4753F25robert::ntickets(N=400,gamma=0.02,p=0.95)
+```
+
+
